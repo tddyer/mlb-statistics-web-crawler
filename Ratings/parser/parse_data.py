@@ -32,7 +32,7 @@ def read_json(filename):
         data = json.load(f)
         return data
 
-# retrives each player's baseballsavant stat page for the given team id and returns them all in a list
+# retrieves every individual player's baseballsavant stat page link for the given team and returns them in a list
 def get_player_pages(team_id):
 
     player_links = []
@@ -52,7 +52,7 @@ def get_player_pages(team_id):
 
     return player_links
 
-# returns list of player vitals (name, postion, bats/throws, height/weight, age, draft, hometown)
+# retrieves and returns a list of player vitals (name, postion, bats/throws, height/weight, age, draft, hometown)
 def get_vitals(player_link):
     soup = soup_gen(player_link)
     info = soup.find('div', attrs={'class': "info"})
@@ -73,13 +73,14 @@ def get_vitals(player_link):
 
     return vitals
 
-# returns a dict containing the given players liftime stats used for their rating calculation
+# returns a list containing a dictionary of the given players lifetime stats for stat categories
+# to be used in rating generation as well as a list of secondary positions for that player
 def get_lifetime_hitter_data(player_link, position):
     dfs = df_gen(player_link)
     lifetime_data = {}
     secondary_pos = []
 
-    # selecting dataframes used for rating calculations
+    # selecting relevant dataframes
     for df in dfs:
         # Latest Transactions chart for current player (gets time injured and number of injuries)
         if 'Transaction' in df.columns:
@@ -163,7 +164,8 @@ def get_lifetime_hitter_data(player_link, position):
 
     return [lifetime_data, secondary_pos]
 
-# returns a dict containing the given pitcher's liftime stats used for their rating calculation
+# returns a list containing the given pitcher's liftime stats used for their rating calculation
+# as well as a list of secondary positions for that player
 def get_lifetime_pitcher_data(player_link, position):
     dfs = df_gen(player_link)
     lifetime_data = {}
