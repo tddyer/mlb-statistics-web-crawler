@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-#import rating_scripts
 import pandas as pd
 import urllib
 import json
@@ -32,9 +31,8 @@ def read_json(filename):
         data = json.load(f)
         return data
 
-# retrives each player's baseballsavant stat page for the given team id and returns them all in a list
+# retrieves every individual player's baseballsavant stat page link for the given team and returns them in a list
 def get_player_pages(team_id):
-
     player_links = []
 
     # getting team url
@@ -52,7 +50,7 @@ def get_player_pages(team_id):
 
     return player_links
 
-# returns list of player vitals (name, postion, bats/throws, height/weight, age, draft, hometown)
+# retrieves and returns a list of player vitals (name, postion, bats/throws, height/weight, age, draft, hometown)
 def get_vitals(player_link):
     soup = soup_gen(player_link)
     info = soup.find('div', attrs={'class': "info"})
@@ -73,13 +71,14 @@ def get_vitals(player_link):
 
     return vitals
 
-# returns a dict containing the given players liftime stats used for their rating calculation
+# returns a list containing a dictionary of the given players lifetime stats for stat categories
+# to be used in rating generation as well as a list of secondary positions for that player
 def get_lifetime_hitter_data(player_link, position):
     dfs = df_gen(player_link)
     lifetime_data = {}
     secondary_pos = []
 
-    # selecting dataframes used for rating calculations
+    # selecting relevant dataframes
     for df in dfs:
         # Latest Transactions chart for current player (gets time injured and number of injuries)
         if 'Transaction' in df.columns:
@@ -163,7 +162,8 @@ def get_lifetime_hitter_data(player_link, position):
 
     return [lifetime_data, secondary_pos]
 
-# returns a dict containing the given pitcher's liftime stats used for their rating calculation
+# returns a list containing the given pitcher's liftime stats used for their rating calculation
+# as well as a list of secondary positions for that player
 def get_lifetime_pitcher_data(player_link, position):
     dfs = df_gen(player_link)
     lifetime_data = {}
@@ -256,8 +256,8 @@ def get_lifetime_pitcher_data(player_link, position):
     return [lifetime_data, secondary_pos]
 
 # sorts a player into their appropriate age group and returns that age group as a string
+#  - will be used as a factor in rating generation
 def sort_by_exp(stats_dict):
-
     if stats_dict['Seasons'] <= 1:
         return 'Rookie'
     elif stats_dict['Seasons'] >= 2 and stats_dict['Seasons'] < 7:
@@ -266,40 +266,9 @@ def sort_by_exp(stats_dict):
         return 'Vet'
     else:
         return 'Old timer'
-'''
-def add_hitter_to_exp_group(name, age, group, stats, rookies, young_guys, vets, old_timers):
-    if age >= 33:
-        old_timers['Hitters'][name] = stats
-    elif group == 'Rookie':
-        rookies['Hitters'][name] = stats
-    elif group == 'Young guy':
-        young_guys['Hitters'][name] = stats
-    elif group == 'Vet':
-        vets['Hitters'][name] = stats
-    elif group == 'Old timer' and age < 33:
-        vets['Hitters'][name] = stats
-    else:
-        old_timers['Hitters'][name] = stats
 
-def add_pitcher_to_exp_group(name, age, group, stats, rookies, young_guys, vets, old_timers):
-    if age >= 33:
-        old_timers['Pitchers'][name] = stats
-    elif group == 'Rookie':
-        rookies['Pitchers'][name] = stats
-    elif group == 'Young guy':
-        young_guys['Pitchers'][name] = stats
-    elif group == 'Vet':
-        vets['Pitchers'][name] = stats
-    elif group == 'Old timer' and age < 33:
-        vets['Pitchers'][name] = stats
-    else:
-        old_timers['Pitchers'][name] = stats
-'''
+# sorts a team's roster into 2 categories: hitters and pitchers
 def sort_team_roster(team_id):
-    #rookies = {'Hitters': {}, 'Pitchers': {}}
-    #young_guys = {'Hitters': {}, 'Pitchers': {}}
-    #vets = {'Hitters': {}, 'Pitchers': {}}
-    #old_timers = {'Hitters': {}, 'Pitchers': {}}
     players = {'Hitters': {}, 'Pitchers': {}}
     team = get_player_pages(team_id)
     for player in team:
@@ -313,16 +282,15 @@ def sort_team_roster(team_id):
             group = sort_by_exp(pitch_stats[0])
             vitals.append(group)
             players['Pitchers'][name] = [vitals, pitch_stats[0]]
-            #add_pitcher_to_exp_group(name, age, group, pitch_stats, rookies, young_guys, vets, old_timers)
         else:
             stats = get_lifetime_hitter_data(player, vitals[1])
             vitals.append(stats[1])
             group = sort_by_exp(stats[0])
             vitals.append(group)
             players['Hitters'][name] = [vitals, stats[0]]
-            #add_hitter_to_exp_group(name, age, group, stats[0], rookies, young_guys, vets, old_timers)
     return players
 
+# parses data for entire league, going team by team
 def get_league_data():
     league_stats = {}
     for team, id in TEAM_IDS.items():
@@ -339,14 +307,3 @@ def print_data(dict):
                 print('         {}: '.format(info[0]))
                 for stat, val in info[1].items():
                     print('        {}: {}'.format(stat, val))
-
-#stats = get_league_data()
-#print_data(stats)
-#print(stats)
-#save_dict_to_json('league_data/league_data.json', stats)
-
-
-#stats = read_json('league_data.json')
-#pow_info = rating_scripts.get_pow_info(stats)
-#rating_scripts.get_pow_stats_avgs(pow_info, 'HR/PA')
-#print_data(stats)
