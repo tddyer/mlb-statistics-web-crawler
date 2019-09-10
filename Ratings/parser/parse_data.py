@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-#import rating_scripts
 import pandas as pd
 import urllib
 import json
@@ -34,7 +33,6 @@ def read_json(filename):
 
 # retrieves every individual player's baseballsavant stat page link for the given team and returns them in a list
 def get_player_pages(team_id):
-
     player_links = []
 
     # getting team url
@@ -260,7 +258,6 @@ def get_lifetime_pitcher_data(player_link, position):
 # sorts a player into their appropriate age group and returns that age group as a string
 #  - will be used as a factor in rating generation
 def sort_by_exp(stats_dict):
-
     if stats_dict['Seasons'] <= 1:
         return 'Rookie'
     elif stats_dict['Seasons'] >= 2 and stats_dict['Seasons'] < 7:
