@@ -290,12 +290,11 @@ def sort_team_roster(team_id):
             players['Hitters'][name] = [vitals, stats[0]]
     return players
 
-# parses data for entire league, going team by team
-def get_league_data():
-    league_stats = {}
-    for team, id in TEAM_IDS.items():
-        league_stats[team] = sort_team_roster(id)
-    return league_stats
+# parses data for NL or AL league, going team by team
+def get_league_data(teams, filepath):
+    for team, id in teams.items():
+        team_stats = sort_team_roster(id)
+        save_dict_to_json(filepath + team.replace(' ', '_').lower() + '.json', team_stats)
 
 def print_data(dict):
     for team, stats in dict.items():
