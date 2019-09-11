@@ -11,6 +11,3 @@ NL_TEAM_IDS = {'Arizona Diamondbacks':'109', 'Atlanta Braves':'144', 'Chicago Cu
 
 parser.get_league_data(AL_TEAM_IDS, 'league_data/AL/')
 parser.get_league_data(NL_TEAM_IDS, 'league_data/NL/')
-#.print_data(stats)
-#parser.save_dict_to_json('league_data/league_data2.json', stats)
-#stats = parser.read_json('league_data/league_data.json')
