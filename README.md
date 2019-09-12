@@ -2,7 +2,7 @@
 Ever wonder just how good your favorite baseball player is? Well now you can know thanks to this MLB player rater!
 
 ## What?
-A web scraper that gathers lifetime statistics for every active MLB player and then uses those statistics to generate an accurate overall rating for that player
+A web scraper that aggregates lifetime statistics for every active player in the MLB and then uses those statistics to generate an accurate overall rating for that player.
 
 ## Why?
 I have begun to develop a passion for data analysis/web scraping and I figured what better way to explore it than with my favorite sport, baseball.
