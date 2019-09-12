@@ -29,4 +29,4 @@ The project is written in python3 and uses both Beautiful Soup 4 and pandas to s
     
 ## Future updates:
 - move from json file to local database storage
-- optimize the web scraper
+- optimize web scraper
