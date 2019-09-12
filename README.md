@@ -9,10 +9,11 @@ I have begun to develop a passion for data analysis/web scraping and I figured w
 
 ## How?
 The project is written in python3 and uses both Beautiful Soup 4 and pandas to scrape information from two sites: (1) mlb.com for base statistics as well as team rosters and (2) baseballsavant.mlb.com for in-depth player statistics. 
-  - Once the stats are gathered, they are sorted by positional category (position player or pitcher) as well as by team, and then stored in a json file (30 in total, one for each team). 
+  - Once the stats are gathered, they are sorted by positional category (position player or pitcher) as well as by team, and then stored in a json file (30 in total, one for each team).
+  - From there, the stats can easily be accessed from the json files to be analyzed for player ratings.
 
 ## Current state:
-- All statistics have been parsed, cleaned, and stored in json files
+- All statistics have been scraped, cleaned, and stored in json files.
 
 ## In progress:
 - Currently working on generating the player rating algorithms which will use statistical analysis to form an overall rating for each individual player. 
@@ -29,5 +30,5 @@ The project is written in python3 and uses both Beautiful Soup 4 and pandas to s
     - Durability
     
 ## Future updates:
-- move from json file to local database storage
-- optimize web scraper
+- Move from json file to local database storage
+- Optimize web scraper (I am aware it can most likely be greatly improved from current state)
