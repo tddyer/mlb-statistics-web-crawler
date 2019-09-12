@@ -8,13 +8,14 @@ A web scraper that gathers lifetime statistics for every active MLB player and t
 I have begun to develop a passion for data analysis/web scraping and I figured what better way to explore it than with my favorite sport, baseball.
 
 ## How?
-Current state:
-- Project is written in python3. It uses Beautiful Soup and pandas to scrape information from two sites: (1) mlb.com for  base statistics as well as team rosters and (2) baseballsavant.mlb.com for in-depth player statistics.
-- Once the stats are gathered, they are sorted by positional category (position player or pitcher) as well by team, and then stored in a json file (30 in total, one for each team)
+The project is written in python3 and uses both Beautiful Soup 4 and pandas to scrape information from two sites: (1) mlb.com for base statistics as well as team rosters and (2) baseballsavant.mlb.com for in-depth player statistics. Once the stats are gathered, they are sorted by positional category (position player or pitcher) as well by team, and then stored in a json file (30 in total, one for each team). 
 
-In progress:
-- Currently working on generating the player rating algorithms which will use statistical analysis to form an overall player rating for each player. 
-  - Overall rating will be formed from multiple sub ratings:
+## Current state:
+- All statistics have been parsed, cleaned, and stored in json files
+
+## In progress:
+- Currently working on generating the player rating algorithms which will use statistical analysis to form an overall rating for each individual player. 
+  - Overall rating will be formed from multiple sub ratings in the following categories:
     - Contact
     - Power
     - Clutch
@@ -26,6 +27,6 @@ In progress:
     - Fielding
     - Durability
     
-Future updates:
+## Future updates:
 - move from json file to local database storage
 - optimize the web scraper
