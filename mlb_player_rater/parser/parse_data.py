@@ -120,10 +120,13 @@ def get_lifetime_hitter_data(player_link, position):
             df = df.drop('Season', axis=1)
             if 'Batted Balls' not in lifetime_data.keys():
                 for col in list(df):
-                    if float(df.ix[len(df.index) - 2][col]) > 1 and float(df.ix[len(df.index) - 2][col]) / int(float(df.ix[len(df.index) - 2][col])) == 1:
-                        lifetime_data[col] = int(df.ix[len(df.index) - 2][col])
+                    if len(df.index) > 1 :
+                        if float(df.ix[len(df.index) - 2][col]) > 1 and float(df.ix[len(df.index) - 2][col]) / int(float(df.ix[len(df.index) - 2][col])) == 1:
+                            lifetime_data[col] = int(df.ix[len(df.index) - 2][col])
+                        else:
+                            lifetime_data[col] = round(float(df.ix[len(df.index) - 2][col]), 3)
                     else:
-                        lifetime_data[col] = round(float(df.ix[len(df.index) - 2][col]), 3)
+                        lifetime_data[col] = 0
 
         # Standard MLB Fielding Statistics chart
         elif 'LG' in df.columns and 'L' not in df.columns and 'FPCT%' in df.columns:
@@ -155,10 +158,13 @@ def get_lifetime_hitter_data(player_link, position):
             df.columns = df.columns.str.strip().str.replace('\n', '')
             df = df.drop(['Season', 'Pitches'], axis=1)
             for col in list(df):
-                if float(df.ix[len(df.index) - 2][col]) > 1 and float(df.ix[len(df.index) - 2][col]) / int(float(df.ix[len(df.index) - 2][col])) == 1:
-                    lifetime_data[col] = int(df.ix[len(df.index) - 2][col])
+                if len(df.index) > 1 :
+                    if float(df.ix[len(df.index) - 2][col]) > 1 and float(df.ix[len(df.index) - 2][col]) / int(float(df.ix[len(df.index) - 2][col])) == 1:
+                        lifetime_data[col] = int(df.ix[len(df.index) - 2][col])
+                    else:
+                        lifetime_data[col] = round(float(df.ix[len(df.index) - 2][col]), 3)
                 else:
-                    lifetime_data[col] = round(float(df.ix[len(df.index) - 2][col]), 3)
+                    lifetime_data[col] = 0
 
     return [lifetime_data, secondary_pos]
 
