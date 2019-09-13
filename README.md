@@ -35,4 +35,4 @@ Current state only allows for data scraping. I have provided a set of scraped st
     
 ## Future updates:
 - Move from json file to local database storage
-- Optimize web scraper (I am aware it can most likely be greatly improved from current state)
+- Optimize web scraper (I am aware that it can most likely be greatly improved from current state)
