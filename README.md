@@ -2,10 +2,10 @@
 Ever wonder just how good your favorite baseball player is? Well now you can know thanks to this MLB player rater!
 
 ## What?
-A web scraper that aggregates lifetime statistics for every active player in the MLB and then uses those statistics to generate an accurate overall rating for that player.
+A web scraper that aggregates lifetime statistics for every active player in the MLB and then uses those statistics to generate an overall rating for that player.
 
 ## Why?
-I have begun to develop a passion for data analysis/web scraping and I figured what better way to explore it than with my favorite sport, baseball.
+Growing up, sports were always my biggest interest. I found myself particularly interested in player statistics, and with all the new statistics becoming available nowadays thanks to better and technologies, this was even more amplified. So, I figured why not begin to explore this interest with my passion for programming?
 
 ## How?
 The project is written in python3 and uses both Beautiful Soup 4 in addition to pandas in order to scrape information from two sites: (1) mlb.com for base statistics as well as team rosters and (2) baseballsavant.mlb.com for in-depth player statistics. 
