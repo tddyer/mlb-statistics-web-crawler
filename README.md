@@ -1,2 +1,1 @@
-# MLB-Player-Rater
-Depricated - I plan on restarting this project using more efficient methods in the near future.
+This branch represents the initial version of this project. It was a good starting point but can be greatly improved, so it is being kept for reference and track the improvements in the newer versions.
