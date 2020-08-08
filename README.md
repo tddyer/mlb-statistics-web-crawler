@@ -1,12 +1,11 @@
-# MLB Stats App
+# MLB Stats Scraper
 
-An application designed to scrape live statistics for MLB players.
+A web scraper built using Scrapy from Python that gathers lifetime player statistics for all active MLB players
 
 ## Initial Tool Ideas
 
 - Data scraping -> Scrapy (Python)
-- Data storage -> Database (MongoDB or PostgreSQL)
-- Application -> Django Web Application (Python)
+- Data storage -> Database (MongoDB or PostgreSQL) OR Files (Json) OR Google Sheets (mimicks a database)
 
 ## Data Sources
 
