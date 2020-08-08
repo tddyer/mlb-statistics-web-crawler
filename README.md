@@ -1,6 +1,6 @@
 # MLB Stats Scraper
 
-A web scraper built using Scrapy from Python that gathers lifetime player statistics for all active MLB players
+A web scraper that gathers lifetime player statistics for all active MLB players
 
 ## Initial Tool Ideas
 
