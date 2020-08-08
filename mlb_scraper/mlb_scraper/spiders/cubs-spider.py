@@ -1,4 +1,5 @@
 import scrapy
+import os
 
 
 class CubsSpider(scrapy.Spider):
@@ -16,7 +17,12 @@ class CubsSpider(scrapy.Spider):
         filename = '%s.txt' % page
         names = response.css('span.full-3fV3c9pF::text').getall()
         i = 0
-        with open('../data/%s' % filename, 'w') as f:
+
+        # check if team has directory in data directory
+        if not os.path.exists('../data/%s' % page):
+            os.makedirs('../data/%s' % page)
+
+        with open('../data/{}/{}'.format(page, filename), 'w') as f:
             while i < len(names) - 1:
                 f.write(names[i] + ' ' + names[i + 1] + '\n')
                 i += 2
