@@ -30,12 +30,6 @@ class CurrentPlayersSpider(scrapy.Spider):
         names = response.css('span.full-3fV3c9pF::text').getall()
         playerLinks = response.css('a.bui-link::attr(href)').getall()[4::]
 
-        # clean up player links list
-        # for link in playerLinks:
-        #     if link[1:7] != 'player':
-        #         playerLinks.remove(link)
-        
-
         # check if team has existing directory in data directory
         if not os.path.exists('../data/%s' % page):
             os.makedirs('../data/%s' % page)
@@ -44,7 +38,6 @@ class CurrentPlayersSpider(scrapy.Spider):
         j = 0
         with open('../data/{}/{}'.format(page, filename), 'w') as f:
             while i < len(names) - 1:
-                #f.write(names[i] + ' ' + names[i + 1] + '\n')
                 f.write('https://www.mlb.com/player/{}-{}-{}\n'.format(names[i].lower(), names[i + 1].lower(), playerLinks[j][-6::]))
                 i += 2
                 j += 1
