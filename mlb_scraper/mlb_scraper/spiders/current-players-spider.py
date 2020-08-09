@@ -37,6 +37,7 @@ class CurrentPlayersSpider(scrapy.Spider):
         i = 0
         j = 0
         with open('../data/{}/{}'.format(page, filename), 'w') as f:
+            f.write('name, url\n')
             while i < len(names) - 1:
                 f.write('{} {}, {}\n'.format(names[i], names[i + 1], response.urljoin(playerLinks[j])))
                 i += 2
