@@ -1,7 +1,7 @@
 https://www.mlb.com/player/didi-gregorius-544369
 https://www.mlb.com/player/scott-kingery-664068
-https://www.mlb.com/player/andrew-mccutchen-457705
 https://www.mlb.com/player/j.t.-realmuto-592663
+https://www.mlb.com/player/andrew-mccutchen-457705
 https://www.mlb.com/player/bryce-harper-547180
 https://www.mlb.com/player/rhys-hoskins-656555
 https://www.mlb.com/player/jean-segura-516416
@@ -12,4 +12,3 @@ https://www.mlb.com/player/phil-gosselin-594838
 https://www.mlb.com/player/neil-walker-435522
 https://www.mlb.com/player/andrew-knapp-595284
 https://www.mlb.com/player/kyle-garlick-664247
-https://www.mlb.com/player/cole-irvin-608344
