@@ -26,7 +26,7 @@ class CurrentPlayersSpider(scrapy.Spider):
 
     def parse(self, response):
         page = response.url.split("/")[-2]
-        filename = '%s.txt' % page
+        filename = '%s.csv' % page
         names = response.css('span.full-3fV3c9pF::text').getall()
         playerLinks = response.css('a.bui-link::attr(href)').getall()[4::]
 
@@ -38,7 +38,7 @@ class CurrentPlayersSpider(scrapy.Spider):
         j = 0
         with open('../data/{}/{}'.format(page, filename), 'w') as f:
             while i < len(names) - 1:
-                f.write('https://www.mlb.com/player/{}-{}-{}\n'.format(names[i].lower(), names[i + 1].lower(), playerLinks[j][-6::]))
+                f.write('{} {}, {}\n'.format(names[i], names[i + 1], response.urljoin(playerLinks[j])))
                 i += 2
                 j += 1
 
