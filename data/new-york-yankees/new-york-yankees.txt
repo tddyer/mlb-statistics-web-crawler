@@ -1,18 +1,17 @@
-Aaron Judge
-DJ LeMahieu
-Gleyber Torres
-Gio Urshela
-Giancarlo Stanton
-Luke Voit
-Gary Sanchez
-Aaron Hicks
-Brett Gardner
-Mike Tauchman
-Miguel Andujar
-Mike Ford
-Tyler Wade
-Kyle Higashioka
-Thairo Estrada
-Erik Kratz
-Albert Abreu
-Jonathan Holder
+https://www.mlb.com/player/aaron-judge-592450
+https://www.mlb.com/player/dj-lemahieu-518934
+https://www.mlb.com/player/gleyber-torres-650402
+https://www.mlb.com/player/gio-urshela-570482
+https://www.mlb.com/player/luke-voit-572228
+https://www.mlb.com/player/giancarlo-stanton-519317
+https://www.mlb.com/player/gary-sanchez-596142
+https://www.mlb.com/player/aaron-hicks-543305
+https://www.mlb.com/player/brett-gardner-458731
+https://www.mlb.com/player/mike-tauchman-643565
+https://www.mlb.com/player/mike-ford-645801
+https://www.mlb.com/player/miguel-andujar-609280
+https://www.mlb.com/player/tyler-wade-642180
+https://www.mlb.com/player/kyle-higashioka-543309
+https://www.mlb.com/player/thairo-estrada-642731
+https://www.mlb.com/player/erik-kratz-456124
+https://www.mlb.com/player/jonathan-holder-656547
