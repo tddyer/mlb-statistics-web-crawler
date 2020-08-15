@@ -1,3 +1,4 @@
+import pandas as pd
 import scrapy
 import os
 
@@ -44,11 +45,14 @@ class CurrentPlayersSpider(scrapy.Spider):
                 i += 2
                 j += 1
                 # scrape player page
-                yield scrapy.Request(url=player_url, callback=self.parse_player, meta={'filename':filename})
+                player_info = yield scrapy.Request(url=player_url, callback=self.parse_player, meta={'file_ref':f})
+                if player_info:
+                    pass
 
         self.log('Saved file %s' % filename)
 
     def parse_player(self, response):
-        page = response.url.split("/")[-2]
-        filename = response.meta['filename'] # getting filename to save data in
-        print(filename)
+        item = {}
+        dfs = pd.read_html(response.url)
+        item['df_eg'] = dfs[2]
+        return item
