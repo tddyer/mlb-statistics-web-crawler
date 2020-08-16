@@ -26,33 +26,35 @@ class CurrentPlayersSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
-        page = response.url.split("/")[-2]
-        filename = '%s.csv' % page
+        team_name = response.url.split("/")[-2]
+        # filename = '%s.csv' % page
         names = response.css('span.full-3fV3c9pF::text').getall()
         playerLinks = response.css('a.bui-link::attr(href)').getall()[4::]
 
         # check if team has existing directory in data directory
-        if not os.path.exists('../data/%s' % page):
-            os.makedirs('../data/%s' % page)
+        if not os.path.exists('../data/%s' % team_name):
+            os.makedirs('../data/%s' % team_name)
 
         i = 0
         j = 0
-        with open('../data/{}/{}'.format(page, filename), 'w') as f:
+        # with open('../data/{}/{}'.format(page, filename), 'w') as f:
             #f.write('name, url\n')
-            while i < len(names) - 1:
-                player_url = response.urljoin(playerLinks[j])
-                #f.write('{} {}, {}\n'.format(names[i], names[i + 1], player_url))
-                i += 2
-                j += 1
-                # scrape player page
-                player_info = yield scrapy.Request(url=player_url, callback=self.parse_player, meta={'file_ref':f})
-                if player_info:
-                    pass
+        print(names)
+        while i < len(names) - 1:
+            player_url = response.urljoin(playerLinks[j])
+            player_name = names[i] + '-' + names[i + 1]
+            i += 2
+            j += 1
+            # scrape player page
+            yield scrapy.Request(url=player_url, callback=self.parse_player, 
+                                    meta={'player_name': player_name, 'team_name':team_name})
 
-        self.log('Saved file %s' % filename)
 
     def parse_player(self, response):
-        item = {}
-        dfs = pd.read_html(response.url)
-        item['df_eg'] = dfs[2]
-        return item
+        player_name = response.meta['player_name'].lower()
+        team_name = response.meta['team_name'].lower()
+        # dfs = pd.read_html(response.url)
+        with open('../data/{}/{}.csv'.format(team_name, player_name), 'w') as f:
+            f.write(player_name + ', ' + team_name + '\n')
+            f.close()
+        
