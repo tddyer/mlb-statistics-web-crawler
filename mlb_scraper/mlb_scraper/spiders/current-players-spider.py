@@ -2,10 +2,14 @@ import pandas as pd
 import scrapy
 import os
 
+# scraping path:
+#     1. mlb.com team stats page -> gathers links to each active player's stat page
+#         - repeats for each team
+#     2. mlb.com player stats page -> gathers player stats and saves to player's csv file
+#         - repeats for each player on a team
 
 class CurrentPlayersSpider(scrapy.Spider):
     name = "current-players"
-
 
     def start_requests(self):
         teams = ['los-angeles-angels']#, 'houston-astros', 'oakland-athletics', 'toronto-blue-jays', 
@@ -27,34 +31,45 @@ class CurrentPlayersSpider(scrapy.Spider):
 
     def parse(self, response):
         team_name = response.url.split("/")[-2]
-        # filename = '%s.csv' % page
         names = response.css('span.full-3fV3c9pF::text').getall()
-        playerLinks = response.css('a.bui-link::attr(href)').getall()[4::]
+        player_links = response.css('a.bui-link::attr(href)').getall()[4::]
 
         # check if team has existing directory in data directory
         if not os.path.exists('../data/%s' % team_name):
             os.makedirs('../data/%s' % team_name)
 
         i = 0
-        j = 0
-        # with open('../data/{}/{}'.format(page, filename), 'w') as f:
-            #f.write('name, url\n')
-        print(names)
+        url_start = 'https://baseballsavant.mlb.com/savant-player/'
+        url_end = '?stats=career-r-hitting-mlb'
         while i < len(names) - 1:
-            player_url = response.urljoin(playerLinks[j])
-            player_name = names[i] + '-' + names[i + 1]
+            # generate player url to be scraped
+            player_name = names[i].lower() + '-' + names[i + 1].lower()
+            player_info = '-'.join([player_name, player_links[i // 2][-6::]])
+            player_url = url_start + player_info + url_end 
             i += 2
-            j += 1
             # scrape player page
             yield scrapy.Request(url=player_url, callback=self.parse_player, 
                                     meta={'player_name': player_name, 'team_name':team_name})
 
-
+    #TODO: grab row headers for csv files
     def parse_player(self, response):
         player_name = response.meta['player_name'].lower()
         team_name = response.meta['team_name'].lower()
-        # dfs = pd.read_html(response.url)
+
+        hitting = response.css('#hittingStandard.standard-mlb')
+        hitting_table = hitting.css('table')[0]
+        rows = hitting_table.xpath('//tr')
+        rows = [row for row in rows if 'hittingStandard-' in str(row)]
+
         with open('../data/{}/{}.csv'.format(team_name, player_name), 'w') as f:
-            f.write(player_name + ', ' + team_name + '\n')
+            for row in rows:
+                text = row.xpath('td//text()').extract()
+                text = [i for i in text if i != ' ']
+                if '*' in text:
+                    text.remove('*')
+                for item in text:
+                    data = item + ', '
+                    f.write(data)
+                f.write('\n')
             f.close()
         
