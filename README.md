@@ -4,7 +4,7 @@ A web scraper that gathers lifetime player statistics for all active MLB players
 
 ## Current Status
 
-Scraper currently gathers a list of links to player statistics pages for the players listed on the first stats page for all 30 of the MLB team pages.
+Web crawler currently scrapes lifetime hitting statistics for all active players (active players being those who have had an at-bat in the current season) in the MLB.
 
 ## Tools + Technologies
 
@@ -13,6 +13,9 @@ Scraper currently gathers a list of links to player statistics pages for the pla
 
 ## Data Sources
 
-Pending update
+- mlb.com team statistic pages (eg: https://www.mlb.com/stats/chicago-cubs?playerPool=ALL)
+  - scrapes links to all active players baseballsavant statistics page for each team
+- mlb.com baseballsavant player statistic pages (eg: https://baseballsavant.mlb.com/savant-player/mike-trout-545361?stats=career-r-hitting-mlb)
+  - scrapes players lifetime hitting statistics - both standard and advanced
 
 
