@@ -12,21 +12,27 @@ class CurrentPlayersSpider(scrapy.Spider):
     name = "current-players"
 
     def start_requests(self):
-        teams = ['los-angeles-angels']#, 'houston-astros', 'oakland-athletics', 'toronto-blue-jays', 
-            # 'atlanta-braves', 'milwaukee-brewers', 'st-louis-cardinals', 'chicago-cubs',
-            # 'arizona-diamondbacks', 'los-angeles-dodgers', 'san-francisco-giants', 'cleveland-indians',
-            # 'seattle-mariners', 'miami-marlins', 'new-york-mets', 'washington-nationals', 
-            # 'baltimore-orioles', 'san-diego-padres', 'philadelphia-phillies', 'pittsburg-pirates',
-            # 'texas-rangers', 'tampa-bay-rays', 'boston-red-sox', 'cincinnati-reds',
-            # 'colorado-rockies', 'kansas-city-royals', 'detroit-tigers', 'minnesota-twins',
-            # 'chicago-white-sox', 'new-york-yankees']
+        teams = ['los-angeles-angels', 'houston-astros', 'oakland-athletics', 'toronto-blue-jays', 
+            'atlanta-braves', 'milwaukee-brewers', 'st-louis-cardinals', 'chicago-cubs',
+            'arizona-diamondbacks', 'los-angeles-dodgers', 'san-francisco-giants', 'cleveland-indians',
+            'seattle-mariners', 'miami-marlins', 'new-york-mets', 'washington-nationals', 
+            'baltimore-orioles', 'san-diego-padres', 'philadelphia-phillies', 'pittsburg-pirates',
+            'texas-rangers', 'tampa-bay-rays', 'boston-red-sox', 'cincinnati-reds',
+            'colorado-rockies', 'kansas-city-royals', 'detroit-tigers', 'minnesota-twins',
+            'chicago-white-sox', 'new-york-yankees']
 
         # list of urls for all mlb teams
         urls = [
             'https://www.mlb.com/stats/' + team + '/at-bats?playerPool=ALL' for team in teams
         ]
 
-        for url in urls:
+        for url in urls[0:10]:
+            yield scrapy.Request(url=url, callback=self.parse)
+        
+        for url in urls[10:20]:
+            yield scrapy.Request(url=url, callback=self.parse)
+        
+        for url in urls[20::]:
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
