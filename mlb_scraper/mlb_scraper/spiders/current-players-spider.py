@@ -2,11 +2,6 @@ import pandas as pd
 import scrapy
 import os
 
-# scraping path:
-#     1. mlb.com team stats page -> gathers links to each active player's stat page
-#         - repeats for each team
-#     2. mlb.com player stats page -> gathers player stats and saves to player's csv file
-#         - repeats for each player on a team
 
 class CurrentPlayersSpider(scrapy.Spider):
     name = "current-players"
@@ -26,6 +21,7 @@ class CurrentPlayersSpider(scrapy.Spider):
             'https://www.mlb.com/stats/' + team + '/at-bats?playerPool=ALL' for team in teams
         ]
 
+        # break urls into groups to prevent opening too many urls at once
         for url in urls[0:10]:
             yield scrapy.Request(url=url, callback=self.parse)
         
@@ -62,11 +58,13 @@ class CurrentPlayersSpider(scrapy.Spider):
         player_name = response.meta['player_name'].lower()
         team_name = response.meta['team_name'].lower()
 
+        # getting player statistic tables
         hitting = response.css('#hittingStandard.standard-mlb')
         hitting_table = hitting.css('table')[0]
         rows = hitting_table.xpath('//tr')
         rows = [row for row in rows if 'hittingStandard-' in str(row)]
 
+        # write stats to player .csv file
         with open('../data/{}/{}.csv'.format(team_name, player_name), 'w') as f:
             for row in rows:
                 text = row.xpath('td//text()').extract()
