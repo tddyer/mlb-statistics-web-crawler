@@ -7,26 +7,29 @@ import os
 class CurrentPlayersSpider(scrapy.Spider):
     name = "current-players"
 
+    # starts the scraping process by navigating to each team's stats page, then recursively calls the parse method on each page
     def start_requests(self):
-        teams = ['los-angeles-angels', 'houston-astros', 'oakland-athletics', 'toronto-blue-jays', 
-            'atlanta-braves', 'milwaukee-brewers', 'st-louis-cardinals', 'chicago-cubs',
-            'arizona-diamondbacks', 'los-angeles-dodgers', 'san-francisco-giants', 'cleveland-indians',
-            'seattle-mariners', 'miami-marlins', 'new-york-mets', 'washington-nationals', 
-            'baltimore-orioles', 'san-diego-padres', 'philadelphia-phillies', 'pittsburgh-pirates',
-            'texas-rangers', 'tampa-bay-rays', 'boston-red-sox', 'cincinnati-reds',
-            'colorado-rockies', 'kansas-city-royals', 'detroit-tigers', 'minnesota-twins',
-            'chicago-white-sox', 'new-york-yankees']
+        teams = ['los-angeles-angels', 'houston-astros', 'oakland-athletics', 'toronto-blue-jays',
+                 'atlanta-braves', 'milwaukee-brewers', 'st-louis-cardinals', 'chicago-cubs',
+                 'arizona-diamondbacks', 'los-angeles-dodgers', 'san-francisco-giants', 'cleveland-indians',
+                 'seattle-mariners', 'miami-marlins', 'new-york-mets', 'washington-nationals',
+                 'baltimore-orioles', 'san-diego-padres', 'philadelphia-phillies', 'pittsburgh-pirates',
+                 'texas-rangers', 'tampa-bay-rays', 'boston-red-sox', 'cincinnati-reds',
+                 'colorado-rockies', 'kansas-city-royals', 'detroit-tigers', 'minnesota-twins',
+                 'chicago-white-sox', 'new-york-yankees']
 
         # list of urls for all mlb teams
         urls = [
             'https://www.mlb.com/stats/' + team + '/at-bats?playerPool=ALL' for team in teams
         ]
 
-        # straight forward method - not optimized
+        # recursive calls to parse method
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
 
+    # parses team stats pages to gather list of unique player links that will be used for gathering player stats, 
+    # then recursively calls parse_player method for each player
     def parse(self, response):
         team_name = response.url.split("/")[-2]
         names = response.css('span.full-3fV3c9pF::text').getall()
@@ -43,13 +46,14 @@ class CurrentPlayersSpider(scrapy.Spider):
             # generate player url to be scraped
             player_name = names[i].lower() + '-' + names[i + 1].lower()
             player_info = '-'.join([player_name, player_links[i // 2][-6::]])
-            player_url = url_start + player_info + url_end 
+            player_url = url_start + player_info + url_end
             i += 2
             # scrape player page
-            yield scrapy.Request(url=player_url, callback=self.parse_player, 
-                                    meta={'player_name': player_name, 'team_name':team_name})
+            yield scrapy.Request(url=player_url, callback=self.parse_player,
+                                 meta={'player_name': player_name, 'team_name': team_name})
 
-    #TODO: grab row headers for csv files
+
+    # parses player Baseball Savant pages and scrapes their lifetime standard hitting stats + lifetime advanced hitting stats
     def parse_player(self, response):
         player_name = response.meta['player_name'].lower()
         team_name = response.meta['team_name'].lower()
@@ -72,4 +76,3 @@ class CurrentPlayersSpider(scrapy.Spider):
                     f.write(data)
                 f.write('\n')
             f.close()
-        
