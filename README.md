@@ -33,6 +33,10 @@ Given Scrapy's asynchronous functionality, the web crawler performs pretty effic
 - On my machine (HP Spectre x360, 4 processors, 16 GB RAM, running Ubuntu 18.04) it completes in about a minute on average.
 - I'm not an expert in web scraping, but given that it scrapes data from 500+ web pages, it is more than efficient enough for my purposes. However, I'm sure it can still be improved and in the future I may consider optimizing its performance.
 
+## Improvements from Verson 1.0
+
+When I first had this idea, I tried using BeautifulSoup4 and urllib. I was able to get something working, but it too over 30 minutes to run on average! With that being said, I'm ecstatic with the improvements in this version while using Scrapy (runtime was decreased by over 95% on average). If you're interested in seeing the initial version, checkout the "version 1.0" branch. The data sources have changed since the initial version so some things may differ, but they end up scraping the same Baseball Savant pages.
+
 ## Future Updates
 
 - Improve data storage techniques
