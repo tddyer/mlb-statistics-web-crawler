@@ -39,5 +39,8 @@ Given Scrapy's asynchronous functionality, the web crawler performs pretty effic
   - Having 500+ .csv files is not optimal
   - Potential options: Database storage (SQL or FireBase) or Google Sheets (use the Python Google Sheets API - https://developers.google.com/sheets/api/quickstart/python - to mimick a database)
 - Optimize performance
+- Add new Scrapy spiders to scrape different types of players statistics
+    - active player pitching statistics 
+    - historic player hitting + pitching statistics
 
 
