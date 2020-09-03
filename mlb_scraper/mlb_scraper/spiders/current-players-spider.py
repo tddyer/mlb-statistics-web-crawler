@@ -1,3 +1,4 @@
+import multiprocessing
 import pandas as pd
 import scrapy
 import os
@@ -11,7 +12,7 @@ class CurrentPlayersSpider(scrapy.Spider):
             'atlanta-braves', 'milwaukee-brewers', 'st-louis-cardinals', 'chicago-cubs',
             'arizona-diamondbacks', 'los-angeles-dodgers', 'san-francisco-giants', 'cleveland-indians',
             'seattle-mariners', 'miami-marlins', 'new-york-mets', 'washington-nationals', 
-            'baltimore-orioles', 'san-diego-padres', 'philadelphia-phillies', 'pittsburg-pirates',
+            'baltimore-orioles', 'san-diego-padres', 'philadelphia-phillies', 'pittsburgh-pirates',
             'texas-rangers', 'tampa-bay-rays', 'boston-red-sox', 'cincinnati-reds',
             'colorado-rockies', 'kansas-city-royals', 'detroit-tigers', 'minnesota-twins',
             'chicago-white-sox', 'new-york-yankees']
@@ -21,15 +22,10 @@ class CurrentPlayersSpider(scrapy.Spider):
             'https://www.mlb.com/stats/' + team + '/at-bats?playerPool=ALL' for team in teams
         ]
 
-        # break urls into groups to prevent opening too many urls at once
-        for url in urls[0:10]:
+        # straight forward method - not optimized
+        for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
-        
-        for url in urls[10:20]:
-            yield scrapy.Request(url=url, callback=self.parse)
-        
-        for url in urls[20::]:
-            yield scrapy.Request(url=url, callback=self.parse)
+
 
     def parse(self, response):
         team_name = response.url.split("/")[-2]
