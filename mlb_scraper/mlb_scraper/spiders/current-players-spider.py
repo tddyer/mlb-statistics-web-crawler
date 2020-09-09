@@ -63,16 +63,92 @@ class CurrentPlayersSpider(scrapy.Spider):
         hitting_table = hitting.css('table')[0]
         rows = hitting_table.xpath('//tr')
         rows = [row for row in rows if 'hittingStandard-' in str(row)]
+        
+        all_table_rows = [] # will store data for rows from both data tables
+        num_seasons = 1 # number of seasons played for this player
 
-        # write stats to player .csv file
-        with open('../data/{}/{}.csv'.format(team_name, player_name), 'w') as f:
-            for row in rows:
-                text = row.xpath('td//text()').extract()
-                text = [i for i in text if i != ' ']
-                if '*' in text:
-                    text.remove('*')
-                for item in text:
+        # getting clean format of data for each table
+        for row in rows:
+            text = row.xpath('td//text()').extract()
+            text = [i for i in text if i != ' ']
+            if '*' in text:
+                text.remove('*')
+
+            temp = []
+            for item in text:
+                temp.append(item)
+                if 'Seasons' in item:
+                    num_seasons = int(item[0:item.index(' ')])
+
+            all_table_rows.append(temp)
+        
+        # combining clean data from tables into single table (standard + advanced)
+        new_table = self.combine_tables(all_table_rows, num_seasons)
+
+        # writing to file
+        with open('../data/{}/{}-combined.csv'.format(team_name, player_name), 'w') as f:
+            for row in new_table:
+                for item in row:
                     data = item + ', '
                     f.write(data)
                 f.write('\n')
             f.close()
+
+
+    # method for combining the standard and advanced data tables into one
+    # NOTE: players who have had seasons in which they've played for more than one team have different tables that 
+    # need to be handled differently: 
+    #   - every season with multi-teams adds 2 extra rows to the table
+    #   (i.e multi_team_years * 2 total additional rows that need to be accounted for)
+    def combine_tables(self, all_table_rows, num_seasons): 
+        total = len(all_table_rows)
+        new_table = []
+
+        # players who haven't had multi-team seasons
+        if total == (num_seasons * 2 + 2): 
+            for i in range(num_seasons + 1):
+                # combining career total rows
+                if i == num_seasons:
+                    totals = all_table_rows[i]
+                    totals.extend(all_table_rows[-1]) 
+                    new_table.append(totals)
+                    break
+
+                # combine standard + advanced rows for each year
+                standard = all_table_rows[i]
+                advanced = all_table_rows[i + num_seasons + 1]
+                combined = standard.copy()
+                combined.extend(advanced[3::])
+                new_table.append(combined)
+        else: # players who have had multi-team seasons
+            multi_team_years = str(all_table_rows).count('2 Teams') // 2 # total number of seasons with multi-teams
+            to_skip = 'filler' # used to skip additional rows added from multi-team years
+
+            for j in range((num_seasons + 1) + (multi_team_years * 2)):
+                if to_skip in all_table_rows[j][0]:
+                    continue
+
+                # combines career total rows
+                if 'Seasons' in all_table_rows[j][0]:
+                    totals = all_table_rows[j]
+                    totals.extend(all_table_rows[-1]) 
+                    new_table.append(totals)
+                    break
+
+                # handles multi-team seasons
+                if '2 Teams' in all_table_rows[j][1]:
+                    to_skip = all_table_rows[j][0]
+                    for n in range(j, j+3):
+                        standard = all_table_rows[n]
+                        advanced = all_table_rows[n + num_seasons + 1 + (multi_team_years * 2)]
+                        combined = standard.copy()
+                        combined.extend(advanced[3::])
+                        new_table.append(combined)
+                else:
+                    standard = all_table_rows[j]
+                    advanced = all_table_rows[j + num_seasons + 1 + (multi_team_years * 2)]
+                    combined = standard.copy()
+                    combined.extend(advanced[3::])
+                    new_table.append(combined)
+        
+        return new_table
