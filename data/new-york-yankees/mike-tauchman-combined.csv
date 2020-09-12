@@ -1,4 +1,4 @@
-Season, Tm, LG, G, PA, AB, R, H, 2B, 3B, HR, RBI, BB, SO, SB, CS, HBP, AVG, OBP, SLG, OPS, Season, Tm, LG, PA, TB, LOB, SAC, SF, BABIP, XBH, GIDP, GIDPO, NP, P/PA, K/PA, HR/PA, BB/K, ISO, ROE, WO
+Season, Tm, LG, G, PA, AB, R, H, 2B, 3B, HR, RBI, BB, SO, SB, CS, HBP, AVG, OBP, SLG, OPS, TB, LOB, SAC, SF, BABIP, XBH, GIDP, GIDPO, NP, P/PA, K/PA, HR/PA, BB/K, ISO, ROE, WO
 2017, COL, NL, 31, 32, 27, 2, 6, 0, 1, 0, 2, 5, 10, 1, 2, 0, .222, .344, .296, .640, 32, 8, 7, 0, 0, .353, 1, 1, 2, 143, 4.469, .313, .000, .500, .074, .074, 0
 2018, COL, NL, 21, 37, 32, 5, 3, 1, 0, 0, 0, 4, 15, 1, 0, 0, .094, .194, .125, .319, 37, 4, 22, 1, 0, .176, 1, 0, 3, 154, 4.162, .405, .000, .267, .031, .031, 0
 2019, NYY, AL, 87, 296, 260, 46, 72, 18, 1, 13, 47, 34, 71, 6, 0, 1, .277, .361, .504, .865, 296, 131, 107, 0, 1, .333, 32, 9, 32, 1288, 4.351, .240, .044, .479, .227, .227, 0

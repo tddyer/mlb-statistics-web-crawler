@@ -1,4 +1,4 @@
-Season, Tm, LG, G, PA, AB, R, H, 2B, 3B, HR, RBI, BB, SO, SB, CS, HBP, AVG, OBP, SLG, OPS, Season, Tm, LG, PA, TB, LOB, SAC, SF, BABIP, XBH, GIDP, GIDPO, NP, P/PA, K/PA, HR/PA, BB/K, ISO, ROE, WO
+Season, Tm, LG, G, PA, AB, R, H, 2B, 3B, HR, RBI, BB, SO, SB, CS, HBP, AVG, OBP, SLG, OPS, TB, LOB, SAC, SF, BABIP, XBH, GIDP, GIDPO, NP, P/PA, K/PA, HR/PA, BB/K, ISO, ROE, WO
 2012, DET, AL, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, .500, .500, .500, 1.000, 2, 1, 0, 0, 0, .500, 0, 0, 0, 4, 2.000, .000, .000, .---, .000, .000, 0
 2013, DET, AL, 34, 71, 66, 13, 13, 0, 1, 0, 5, 2, 15, 1, 0, 0, .197, .217, .227, .445, 71, 15, 27, 2, 1, .250, 1, 2, 11, 239, 3.366, .211, .000, .133, .030, .030, 0
 2014, DET, AL, 8, 6, 5, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, .200, .333, .200, .533, 6, 1, 4, 0, 0, .250, 0, 0, 1, 24, 4.000, .167, .000, 1.000, .000, .000, 0

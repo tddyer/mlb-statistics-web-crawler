@@ -1,4 +1,4 @@
-Season, Tm, LG, G, PA, AB, R, H, 2B, 3B, HR, RBI, BB, SO, SB, CS, HBP, AVG, OBP, SLG, OPS, Season, Tm, LG, PA, TB, LOB, SAC, SF, BABIP, XBH, GIDP, GIDPO, NP, P/PA, K/PA, HR/PA, BB/K, ISO, ROE, WO
+Season, Tm, LG, G, PA, AB, R, H, 2B, 3B, HR, RBI, BB, SO, SB, CS, HBP, AVG, OBP, SLG, OPS, TB, LOB, SAC, SF, BABIP, XBH, GIDP, GIDPO, NP, P/PA, K/PA, HR/PA, BB/K, ISO, ROE, WO
 2005, MIL, NL, 8, 7, 5, 1, 1, 1, 0, 0, 0, 2, 0, 0, 0, 0, .200, .429, .400, .829, 7, 2, 0, 0, 0, .200, 1, 0, 0, 30, 4.286, .000, .000, .---, .200, .200, 0
 2006, TEX, AL, 41, 138, 130, 15, 29, 3, 0, 6, 22, 7, 32, 1, 0, 0, .223, .261, .385, .645, 138, 50, 47, 0, 1, .247, 9, 1, 16, 543, 3.935, .232, .043, .219, .162, .162, 0
 2007, TEX, AL, 96, 333, 307, 35, 72, 15, 2, 9, 34, 21, 87, 2, 4, 2, .235, .287, .384, .671, 333, 118, 130, 1, 1, .297, 26, 5, 38, 1321, 3.967, .261, .027, .241, .150, .150, 1

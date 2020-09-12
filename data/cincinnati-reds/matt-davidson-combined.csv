@@ -1,4 +1,4 @@
-Season, Tm, LG, G, PA, AB, R, H, 2B, 3B, HR, RBI, BB, SO, SB, CS, HBP, AVG, OBP, SLG, OPS, Season, Tm, LG, PA, TB, LOB, SAC, SF, BABIP, XBH, GIDP, GIDPO, NP, P/PA, K/PA, HR/PA, BB/K, ISO, ROE, WO
+Season, Tm, LG, G, PA, AB, R, H, 2B, 3B, HR, RBI, BB, SO, SB, CS, HBP, AVG, OBP, SLG, OPS, TB, LOB, SAC, SF, BABIP, XBH, GIDP, GIDPO, NP, P/PA, K/PA, HR/PA, BB/K, ISO, ROE, WO
 2013, ARI, NL, 31, 87, 76, 8, 18, 6, 0, 3, 12, 10, 24, 0, 1, 1, .237, .333, .434, .768, 87, 33, 37, 0, 0, .306, 9, 1, 10, 362, 4.161, .276, .034, .417, .197, .197, 0
 2016, CWS, AL, 1, 2, 2, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, .500, .500, .500, 1.000, 2, 1, 1, 0, 0, 1.000, 0, 0, 0, 10, 5.000, .500, .000, .---, .000, .000, 0
 2017, CWS, AL, 118, 443, 414, 43, 91, 16, 1, 26, 68, 19, 165, 0, 1, 5, .220, .260, .452, .711, 443, 187, 192, 0, 5, .285, 43, 12, 64, 1855, 4.187, .372, .059, .115, .232, .232, 2

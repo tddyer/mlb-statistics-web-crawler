@@ -76,7 +76,7 @@ class CurrentPlayersSpider(scrapy.Spider):
         table_headers = [] 
         for th in ths:
           header = th.xpath('text()').extract()
-          if header:
+          if header and header[0] not in table_headers:
             table_headers.append(header[0])
 
         # getting clean format of data for each table
