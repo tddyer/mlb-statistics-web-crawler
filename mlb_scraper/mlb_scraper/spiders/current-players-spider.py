@@ -67,6 +67,18 @@ class CurrentPlayersSpider(scrapy.Spider):
         all_table_rows = [] # will store data for rows from both data tables
         num_seasons = 1 # number of seasons played for this player
 
+        # getting hitting table headers
+        table_head = hitting_table.xpath('//thead')
+        head = table_head[0]
+        ths = head.xpath('//th')
+        ths = [th for th in ths if 'hittingStandard_' in str(th)]
+
+        table_headers = [] 
+        for th in ths:
+          header = th.xpath('text()').extract()
+          if header and header[0] not in table_headers:
+            table_headers.append(header[0])
+
         # getting clean format of data for each table
         for row in rows:
             text = row.xpath('td//text()').extract()
@@ -85,13 +97,20 @@ class CurrentPlayersSpider(scrapy.Spider):
         # combining clean data from tables into single table (standard + advanced)
         new_table = self.combine_tables(all_table_rows, num_seasons)
 
-        # writing to file
+        # writing headers + cleaned data to file
         with open('../data/{}/{}-combined.csv'.format(team_name, player_name), 'w') as f:
+            for ind in range(len(table_headers)):
+                if ind == len(table_headers) - 1:
+                    f.write(table_headers[ind] + '\n')
+                else:
+                    f.write(table_headers[ind] + ', ')
+            
             for row in new_table:
-                for item in row:
-                    data = item + ', '
-                    f.write(data)
-                f.write('\n')
+                for ind in range(len(row)):
+                    if ind == len(row) - 1:
+                        f.write(row[ind] + '\n')
+                    else:
+                        f.write(row[ind] + ', ')
             f.close()
 
 
@@ -118,8 +137,15 @@ class CurrentPlayersSpider(scrapy.Spider):
                 standard = all_table_rows[i]
                 advanced = all_table_rows[i + num_seasons + 1]
                 combined = standard.copy()
-                combined.extend(advanced[3::])
+                combined.extend(advanced[4::])
                 new_table.append(combined)
+        elif total ==  2: # rookies who don't have cumulative stat total rows (have only played a few games)
+             # combine standard + advanced rows for each year
+            standard = all_table_rows[0]
+            advanced = all_table_rows[1]
+            combined = standard.copy()
+            combined.extend(advanced[4::])
+            new_table.append(combined)
         else: # players who have had multi-team seasons
             multi_team_years = str(all_table_rows).count('2 Teams') // 2 # total number of seasons with multi-teams
             to_skip = 'filler' # used to skip additional rows added from multi-team years
@@ -142,13 +168,13 @@ class CurrentPlayersSpider(scrapy.Spider):
                         standard = all_table_rows[n]
                         advanced = all_table_rows[n + num_seasons + 1 + (multi_team_years * 2)]
                         combined = standard.copy()
-                        combined.extend(advanced[3::])
+                        combined.extend(advanced[4::])
                         new_table.append(combined)
                 else:
                     standard = all_table_rows[j]
                     advanced = all_table_rows[j + num_seasons + 1 + (multi_team_years * 2)]
                     combined = standard.copy()
-                    combined.extend(advanced[3::])
+                    combined.extend(advanced[4::])
                     new_table.append(combined)
         
         return new_table
