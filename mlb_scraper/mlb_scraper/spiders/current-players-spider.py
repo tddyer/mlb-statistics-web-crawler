@@ -137,8 +137,15 @@ class CurrentPlayersSpider(scrapy.Spider):
                 standard = all_table_rows[i]
                 advanced = all_table_rows[i + num_seasons + 1]
                 combined = standard.copy()
-                combined.extend(advanced[3::])
+                combined.extend(advanced[4::])
                 new_table.append(combined)
+        elif total ==  2: # rookies who don't have cumulative stat total rows (have only played a few games)
+             # combine standard + advanced rows for each year
+            standard = all_table_rows[0]
+            advanced = all_table_rows[1]
+            combined = standard.copy()
+            combined.extend(advanced[4::])
+            new_table.append(combined)
         else: # players who have had multi-team seasons
             multi_team_years = str(all_table_rows).count('2 Teams') // 2 # total number of seasons with multi-teams
             to_skip = 'filler' # used to skip additional rows added from multi-team years
@@ -161,13 +168,13 @@ class CurrentPlayersSpider(scrapy.Spider):
                         standard = all_table_rows[n]
                         advanced = all_table_rows[n + num_seasons + 1 + (multi_team_years * 2)]
                         combined = standard.copy()
-                        combined.extend(advanced[3::])
+                        combined.extend(advanced[4::])
                         new_table.append(combined)
                 else:
                     standard = all_table_rows[j]
                     advanced = all_table_rows[j + num_seasons + 1 + (multi_team_years * 2)]
                     combined = standard.copy()
-                    combined.extend(advanced[3::])
+                    combined.extend(advanced[4::])
                     new_table.append(combined)
         
         return new_table
